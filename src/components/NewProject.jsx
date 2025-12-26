@@ -1,6 +1,26 @@
 import Input from "./Input.jsx";
+import { useRef } from "react";
 
-export default function NewProject() {
+export default function NewProject({onAdd}) {
+
+    const title = useRef();
+    const description = useRef();
+    const dueDate = useRef();
+
+    function handleSave() {
+        const enteredTitle = title.current.value;
+        const enteredDescription = description.current.value;
+        const enteredDueDate = dueDate.current.value;
+
+        // optional: Add validation here
+        onAdd({ 
+            title: enteredTitle,
+            description: enteredDescription,
+            dueDate: enteredDueDate
+        });
+
+    }
+
     return (
         <div className="w-[35rem] mt-16">
 
@@ -8,13 +28,14 @@ export default function NewProject() {
            <li><button className=" text-stone800 hover:text-stone-950"
            >Cancel</button></li>
            <li><button className="px-4 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950"
+           onClick={handleSave}
            >Save</button></li>
             </menu>
 
             <div>
-                <Input label="Project Title" />
-                <Input label="Project Description" textarea />
-                <Input label="Due Date" type="date" />
+                <Input ref={title} label="Project Title" />
+                <Input ref={description} label="Project Description" textarea />
+                <Input ref={dueDate} label="Due Date" type="date" />
             </div>
 
         </div>
